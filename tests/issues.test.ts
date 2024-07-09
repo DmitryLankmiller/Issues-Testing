@@ -2,6 +2,7 @@ import test, { expect } from '@playwright/test';
 import { goToRepo, logIn, openRepoIssues } from './utils';
 import { IssuesMainPage } from '../pages/issues/issues.main.page';
 import { IssuePage } from '../pages/issues/issues.issue.page';
+import { MainPage } from '../pages/main/main.page';
 
 test.describe('Testing Issues', () => {
 	const OWNER = 'DmitryLankmiller';
@@ -18,6 +19,10 @@ test.describe('Testing Issues', () => {
 		issuesMainPage = await openRepoIssues(repoPage);
 	});
 
+	test.afterEach(async ({ page }) => {
+		await page.close();
+	});
+
 	test('Create issue', async () => {
 		let issuesCreatePage =
 			await test.step('going to issue creating page', async () => {
@@ -26,10 +31,10 @@ test.describe('Testing Issues', () => {
 				return issuesCreatePage;
 			});
 		let issuePage = await test.step('enter issue data', async () => {
-			await issuesCreatePage.setFirstAssignee();
-			await issuesCreatePage.setLabelByName(LABEL_NAME);
 			await issuesCreatePage.setIssueTitle(ISSUE_TITLE);
 			await issuesCreatePage.setIssueBody(ISSUE_BODY);
+			await issuesCreatePage.setFirstAssignee();
+			await issuesCreatePage.setLabelByName(LABEL_NAME);
 			let issuePage = await issuesCreatePage.clickSubmitIssueBtn();
 			await issuePage.checkPage();
 			return issuePage;
@@ -39,7 +44,7 @@ test.describe('Testing Issues', () => {
 			await expect(await issuePage.getIssueBody()).toHaveText(ISSUE_BODY);
 		});
 		await test.step('deleting issue', async () => {
-			issuesMainPage = await deleteIssue(issuePage);
+			await deleteIssue(issuePage);
 		});
 	});
 
@@ -47,6 +52,9 @@ test.describe('Testing Issues', () => {
 		await test.step('creating issue', async () => {
 			await createIssue(issuesMainPage);
 			await page.goto('./..');
+			let mainPage = new MainPage(page);
+			let repoPage = await goToRepo(OWNER, REPO_NAME, mainPage);
+			issuesMainPage = await openRepoIssues(repoPage);
 		});
 		let issuePage = await test.step('going to first issue page', async () => {
 			let issuePage = await issuesMainPage.clickFirstIssue();
@@ -61,17 +69,17 @@ test.describe('Testing Issues', () => {
 			await expect(await issuePage.getIssueBody()).toHaveText(NEW_ISSUE_BODY);
 		});
 		await test.step('deleting issue', async () => {
-			issuesMainPage = await deleteIssue(issuePage);
+			await deleteIssue(issuePage);
 		});
 	});
 
 	async function createIssue(issuesMainPage: IssuesMainPage) {
 		let issuesCreatePage = await issuesMainPage.clickNewIssueBtn();
 		await issuesCreatePage.checkPage();
-		await issuesCreatePage.setFirstAssignee();
-		await issuesCreatePage.setLabelByName(LABEL_NAME);
 		await issuesCreatePage.setIssueTitle(ISSUE_TITLE);
 		await issuesCreatePage.setIssueBody(ISSUE_BODY);
+		await issuesCreatePage.setFirstAssignee();
+		await issuesCreatePage.setLabelByName(LABEL_NAME);
 		let issuePage = await issuesCreatePage.clickSubmitIssueBtn();
 		await issuePage.checkPage();
 		return issuePage;
