@@ -49,15 +49,18 @@ test.describe('Testing Issues', () => {
 	});
 
 	test('Edit issue', async ({ page }) => {
+		let issueNumber: number;
+
 		await test.step('creating issue', async () => {
-			await createIssue(issuesMainPage);
+			let issuePage = await createIssue(issuesMainPage);
+			issueNumber = await issuePage.getIssueNumber();
 			await page.goto('./..');
 			let mainPage = new MainPage(page);
 			let repoPage = await goToRepo(OWNER, REPO_NAME, mainPage);
 			issuesMainPage = await openRepoIssues(repoPage);
 		});
 		let issuePage = await test.step('going to first issue page', async () => {
-			let issuePage = await issuesMainPage.clickFirstIssue();
+			let issuePage = await issuesMainPage.clickIssueById(issueNumber);
 			await issuePage.checkPage();
 			return issuePage;
 		});

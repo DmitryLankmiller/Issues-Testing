@@ -7,6 +7,7 @@ import { MainPage } from '../main/main.page';
 export class IssuePage extends IssuesWithSidebarPage {
 	private readonly discussionHeader: Locator;
 	private readonly issueTitle: Locator;
+	private readonly issueNumber: Locator;
 	// private readonly discussionBucket: Locator;
 	private readonly issueBody: Locator;
 	private readonly issueBodyText: Locator;
@@ -26,6 +27,7 @@ export class IssuePage extends IssuesWithSidebarPage {
 			"xpath=.//*[@id='partial-discussion-header']"
 		);
 		this.issueTitle = this.discussionHeader.locator('xpath=.//bdi');
+		this.issueNumber = this.issueTitle.locator('xpath=./following-sibling::*');
 		// this.discussionBucket = page.locator("xpath=.//*[@id='discussion_bucket']");
 		this.issueBody = page.locator(
 			"xpath=(.//*[@id='discussion_bucket']//task-lists)[1]/../.."
@@ -52,6 +54,12 @@ export class IssuePage extends IssuesWithSidebarPage {
 
 	public async getIssueTitle() {
 		return this.issueTitle;
+	}
+
+	public async getIssueNumber() {
+		let issueNumberString = await this.issueNumber.textContent();
+		let numberString = issueNumberString == null ? '-1' : issueNumberString;
+		return parseInt(numberString.replace('#', ''));
 	}
 
 	public async getIssueBody() {

@@ -25,7 +25,7 @@ export class IssuesMainPage extends BasePage {
 	}
 
 	public async findIssueById(id: number) {
-		return this.issuesList.locator(`xpath=.//*[@id='issue_${id}']`);
+		return this.issuesList.locator(`xpath=.//*[@id='issue_${id}_link']`);
 	}
 
 	public async clickIssueById(id: number) {
