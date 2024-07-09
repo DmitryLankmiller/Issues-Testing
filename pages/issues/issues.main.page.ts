@@ -39,6 +39,6 @@ export class IssuesMainPage extends BasePage {
 	}
 
 	async checkPage() {
-		expect(this.issuesList.isVisible()).toBeTruthy();
+		expect(this.newIssueBtn.isEnabled()).toBeTruthy();
 	}
 }
