@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from '../base.page';
-import { RepoPage } from "./repo.page";
+import { RepoPage } from './repo.page';
 
 export class MainPage extends BasePage {
 	private readonly leftDashboard: Locator;
@@ -14,10 +14,10 @@ export class MainPage extends BasePage {
 
 	public async goToRepoByLink(owner: string, repoName: string) {
 		await this.page.goto(`/${owner}/${repoName}`);
-		return new RepoPage(this.page)
+		return new RepoPage(this.page);
 	}
 
-	checkPage(): void {
+	async checkPage() {
 		expect(this.leftDashboard.isEnabled).toBeTruthy();
 	}
 }
