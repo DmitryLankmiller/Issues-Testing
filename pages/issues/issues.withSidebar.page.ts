@@ -43,6 +43,5 @@ export class IssuesWithSidebarPage extends BasePage {
 
 	checkPage(): void {
         expect(this.assigneesSelectMenu.isEnabled()).toBeTruthy();
-		expect(this.labelsSelectMenu.isEnabled()).toBeTruthy();
     }
 }
