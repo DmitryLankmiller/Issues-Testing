@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from '../base.page';
 import { IssuesWithSidebarPage } from './issues.withSidebar.page';
+import { IssuesMainPage } from './issues.main.page';
 
 export class IssuePage extends IssuesWithSidebarPage {
 	private readonly discussionHeader: Locator;
@@ -13,6 +14,8 @@ export class IssuePage extends IssuesWithSidebarPage {
 	private readonly issueBodyEditBtn: Locator;
 	private readonly issueBodyEditTextArea: Locator;
 	private readonly issueBodyUpdateCommentBtn: Locator;
+	private readonly deleteIssueBtn: Locator;
+	private readonly deleteConfirmBtn: Locator;
 
 	constructor(page: Page) {
 		super(page);
@@ -38,6 +41,12 @@ export class IssuePage extends IssuesWithSidebarPage {
 		this.issueBodyUpdateCommentBtn = this.issueBody.locator(
 			"xpath=.//*[contains(text(), 'Update comment')]"
 		);
+		this.deleteIssueBtn = page.locator(
+			"xpath=.//*[contains(text(), 'Delete issue')]"
+		);
+		this.deleteConfirmBtn = page.locator(
+			"xpath=.//*[contains(text(), 'Delete this issue')]"
+		);
 	}
 
 	public async getIssueTitle() {
@@ -60,7 +69,15 @@ export class IssuePage extends IssuesWithSidebarPage {
 		await this.issueBodyUpdateCommentBtn.click();
 	}
 
-	checkPage(): void {
+	public async deleteIssue() {
+		await this.deleteIssueBtn.click();
+		await this.deleteConfirmBtn.click();
+		let issuesMainPage = new IssuesMainPage(this.page);
+		await issuesMainPage.checkPage();
+		return issuesMainPage;
+	}
+
+	async checkPage() {
 		expect(this.discussionHeader.isVisible()).toBeTruthy();
 		expect(this.issueBody.isVisible()).toBeTruthy();
 	}
