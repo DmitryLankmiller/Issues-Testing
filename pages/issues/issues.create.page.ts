@@ -10,7 +10,7 @@ export class IssuesCreatePage extends IssuesWithSidebarPage {
 
 	constructor(page: Page) {
 		super(page);
-        super.checkPage();
+		super.checkPage();
 		this.issueTitleField = page.locator("xpath=.//*[@id='issue_title']");
 		this.issueBodyField = page.locator("xpath=.//*[@id='issue_body']");
 		this.submitIssueBtn = page.locator(
@@ -19,25 +19,27 @@ export class IssuesCreatePage extends IssuesWithSidebarPage {
 	}
 
 	public async setIssueTitle(title: string) {
-		this.issueTitleField.fill(title);
+		await this.issueTitleField.fill(title);
 	}
 
 	public async setIssueBody(body: string) {
-		this.issueBodyField.fill(body);
+		await this.issueBodyField.fill(body);
 	}
 
 	public async clickAssigneesMenu() {
-		this.assigneesSelectMenu.click();
+		await this.assigneesSelectMenu.click();
 	}
 
 	public async setFirstAssignee() {
 		await this.clickAssigneesMenu();
 		await this.assigneesSelectMenuItems.first().click();
+		await this.assigneesSelectMenu.press('Escape');
 	}
 
 	public async setAssigneeByName(userName: string) {
 		await this.clickAssigneesMenu();
 		await this.assigneesSelectMenuItems.getByText(userName).first().click();
+		await this.assigneesSelectMenu.press('Escape');
 	}
 
 	public async clickAssigneeYourselfBtn() {
@@ -51,6 +53,7 @@ export class IssuesCreatePage extends IssuesWithSidebarPage {
 	public async setLabelByName(labelName: string) {
 		await this.clickLabelsSelectMenu();
 		await this.labelsMenuItems.getByText(labelName).click();
+        await this.labelsSelectMenu.press('Escape');
 	}
 
 	public async clickSubmitIssueBtn() {
