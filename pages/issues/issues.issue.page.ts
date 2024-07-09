@@ -2,6 +2,7 @@ import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from '../base.page';
 import { IssuesWithSidebarPage } from './issues.withSidebar.page';
 import { IssuesMainPage } from './issues.main.page';
+import { MainPage } from '../main/main.page';
 
 export class IssuePage extends IssuesWithSidebarPage {
 	private readonly discussionHeader: Locator;
@@ -72,9 +73,9 @@ export class IssuePage extends IssuesWithSidebarPage {
 	public async deleteIssue() {
 		await this.deleteIssueBtn.click();
 		await this.deleteConfirmBtn.click();
-		let issuesMainPage = new IssuesMainPage(this.page);
-		await issuesMainPage.checkPage();
-		return issuesMainPage;
+		let mainPage = new MainPage(this.page);
+		await mainPage.checkPage();
+		return mainPage;
 	}
 
 	async checkPage() {
