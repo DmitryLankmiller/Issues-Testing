@@ -58,7 +58,7 @@ export class IssuesCreatePage extends IssuesWithSidebarPage {
 		return new IssuePage(this.page);
 	}
 
-	checkPage(): void {
+	async checkPage() {
 		expect(this.issueTitleField.isEnabled()).toBeTruthy();
 		expect(this.issueBodyField.isEnabled()).toBeTruthy();
 		expect(this.submitIssueBtn.isVisible()).toBeTruthy();
