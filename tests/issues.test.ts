@@ -5,8 +5,8 @@ import { IssuePage } from '../pages/issues/issues.issue.page';
 import { MainPage } from '../pages/main/main.page';
 
 test.describe('Testing Issues', () => {
-	const OWNER = 'DmitryLankmiller';
-	const REPO_NAME = 'VK_Education_Automated_Testing_PlayWright_Project';
+	const OWNER = '<REPO-OWNER-NAME>';
+	const REPO_NAME = '<REPO-NAME>';
 	const LABEL_NAME = 'bug';
 	const ISSUE_TITLE = 'Issue 1';
 	const ISSUE_BODY = 'Я нашёл баг';

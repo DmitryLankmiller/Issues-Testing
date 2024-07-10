@@ -4,8 +4,8 @@ import { WelcomePage } from "../pages/login/welcome.page";
 import { MainPage } from "../pages/main/main.page";
 import { RepoPage } from "../pages/main/repo.page";
 
-const LOGIN = 'DmitryLankmiller';
-const PASSWORD = '45lbhtrnjh';
+const LOGIN = '<YOUR-ACCOUNT>';
+const PASSWORD = '<YOUR-PASSWORD>';
 
 export async function logIn(page: Page) {
 	await page.goto('/');
