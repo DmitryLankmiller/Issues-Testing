@@ -1,5 +1,7 @@
 ## VK Tech testing
 
+В файле <code>utils.ts</code> необходимо записать логин и пароль тестового пользователя
+В файле <code>issues.test.ts</code> необходимо ввести имя владельца репозитория (<code><REPO-OWNER-NAME></code>) и название репозитория (<code><REPO-NAME></code>)
 Для запуска выполните в директории проекта следующие команды:
 <ul>
   <li><code>npm install</code></li>
